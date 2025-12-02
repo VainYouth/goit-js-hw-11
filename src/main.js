@@ -14,16 +14,16 @@ submitBtn.disabled = true;
 input.addEventListener('input', evt => {
   submitBtn.disabled = evt.target.value.trim() === '';
 });
+
 // ===================================================================
 // ПОДІЯ сабміт
 form.addEventListener('submit', evt => {
   evt.preventDefault();
   showLoader();
 
-  const searchWord = document
-    .querySelector('input[name="search-text"]')
-    .value.trim();
+  const searchWord = input.value.trim();
   if (!searchWord) {
+    hideLoader(); // если отправили пустое — тоже прятать
     return;
   }
 
@@ -31,7 +31,10 @@ form.addEventListener('submit', evt => {
 
   getImagesByQuery(searchWord)
     .then(makeMarkup)
-    .catch(error => console.log(error));
-  form.reset();
-  submitBtn.disabled = true;
+    .catch(error => console.log(error))
+    .finally(() => {
+      hideLoader();       // ← ЛОАДЕР ТЕПЕРЬ ВСЕГДА СКРЫВАЕТСЯ
+      form.reset();
+      submitBtn.disabled = true;
+    });
 });
