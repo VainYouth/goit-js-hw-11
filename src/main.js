@@ -1,5 +1,5 @@
 import { getImagesByQuery } from './js/pixabay-api.js';
-import { clearGallery, showLoader, makeMarkup } from './js/render-functions.js';
+import { clearGallery, showLoader, hideLoader, makeMarkup } from './js/render-functions.js';
 
 // ===================================================================
 // БАЗА
